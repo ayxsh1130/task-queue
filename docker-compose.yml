@@ -12,5 +12,22 @@
       timeout: 3s
       retries: 5
 
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: taskqueue
+      POSTGRES_PASSWORD: taskqueue
+      POSTGRES_DB: taskqueue
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taskqueue"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
 volumes:
   redis_data:
+  postgres_data:
